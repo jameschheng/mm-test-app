@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-sm">
+
+      <h3>Search Firms</h3>
+
+      <h4>Field 1</h4>
+      Firm Status:<br />
+      <%= hidden_field_tag "field[1][name]", "status_id" %>
+      <%= select_tag "field[2][operator]", options_for_select(["IS", "IS BLANK", "IS NOT BLANK"]), { "data-placeholder" => "- Select -", multiple: false, class: "form-control" } %>
+      <%= select_tag "field[1][value]", options_for_select(FirmStatus.all.collect{ |d| [d.name, d.name]}), { "data-placeholder" => "- Select -", multiple: false, include_blank: true, class: "form-control select2" } %>
+
+      <hr>
+      Condition:<br />
+      <%= select_tag "field[1][condition]", options_for_select([["AND"], ["OR"]]), { "data-placeholder" => "- Select -", multiple: false, class: "form-control select2" } %>
+      <hr>
+      <h4>Field 2</h4>
+      City:<br />
+      <%= hidden_field_tag "field[2][name]", "city" %>
+      <%= select_tag "field[2][operator]", options_for_select(["IS", "IS BLANK", "IS NOT BLANK"]), { "data-placeholder" => "- Select -", include_blank: true, multiple: false, class: "form-control" } %>
+      <%= text_field_tag "field[2][value]", "", { class: "form-control" } %>
+    </div>
+
+<hr>
+    <div>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Phone</th>
+            <th>URL</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @firms.each do |firm| %>
+            <tr>
+              <td><%= firm.name %></td>
+              <td><%= firm.city %></td>
+              <td><%= firm.state_abbrv %></td>
+              <td><%= firm.phone %></td>
+              <td><%= link_to firm.url, firm.url, target: "_blank" if firm.url.present? %></td>
+              <td><%= firm.status.name if firm.status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
